@@ -1,20 +1,43 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import PrivateLayoutVue from '@/layouts/PrivateLayout.vue'
+import AuthLayout from '@/layouts/AuthLayout.vue'
+import { authRoutes } from './../modules/auth/routes/index';
+import { candidatesRoutes } from './../modules/portal/routes/index';
 
 const routes = [
+
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    component: PrivateLayoutVue,
+    // beforeEnter: [ isAuthenticatedGuard ],
+    children: [
+      {
+        path: '',
+        component: HomeView,
+        meta: { title: 'Home' }
+      },
+      ...candidatesRoutes,
+      // {
+      //   path: '/home',
+      //   component: HomeView,
+      //   meta: { title: 'Home' }
+      // }
+    ]
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: '/auth',
+    component: AuthLayout,
+    children: [
+      // {
+      //   path: 'login',
+      //   name: 'auth-signin',
+      //   component: AboutView,
+      //   meta: { title: 'Auth' }
+      // }
+      ...authRoutes
+    ]
+  },
 ]
 
 const router = createRouter({
