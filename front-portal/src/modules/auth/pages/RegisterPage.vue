@@ -7,9 +7,15 @@ import { useRouter } from 'vue-router';
 
     const router = useRouter()
 
-    const {login} = useAuth();
+    const {register} = useAuth();
 
   const form = ref(null);
+  const document_number = ref('9876543');
+  const document_type = ref('dni');
+  const name = ref('miguel');
+  const last_name = ref('casca');
+  const birthday = ref('2000-10-10');
+
   const email = ref('cristian@gmail.com');
   const password = ref('123456');
   const authError = ref(false);
@@ -41,8 +47,17 @@ const handleSubmit = async () => {
   if (valid) {
     try {
       authLoading.value = true
-      const response = await login(email.value, password.value)
-
+      const payload = {
+        document_number: document_number.value,
+        document_type: document_type.value,
+        name: name.value,
+        last_name: last_name.value,
+        birthday: birthday.value,
+        email: email.value,
+        password: password.value,
+        role: 'candidate'
+      }
+      const response = await register(payload)
       if ( response.success ) {
         router.push('/jobs')
         authError.value = false;
@@ -66,15 +81,37 @@ const handleSubmit = async () => {
 
     <v-form ref="form" @submit.prevent="handleSubmit" class="mx-auto mb-0 mt-8 max-w-md space-y-4">
       <div>
-        <label for="email" class="sr-only">Email</label>
+        <label for="email" class="sr-only">Nombre</label>
+        <div class="relative">
+          <v-text-field 
+          v-model="name" 
+          :rules="[(v) => !!v.trim() && v.length > 0 || 'El Nombre es requerido',]"
+          label="Nombre" 
+          variant="outlined" 
+          type="text"
+          placeholder="Juan" />
+        </div>
+      </div>
 
+      <div>
+        <label for="email" class="sr-only">Apellido</label>
+        <div class="relative">
+            <v-text-field 
+            v-model="last_name" 
+            :rules="[(v) => !!v.trim() && v.length > 0 || 'El Apellido es requerido',]"
+            label="Apellido" 
+            variant="outlined" 
+            type="text"
+            placeholder="testuser@example.com"
+            />
+        </div>
+      </div>
+
+      <div>
+        <label for="email" class="sr-only">Email</label>
         <div class="relative">
           <v-text-field v-model="email" :rules="correoRules" label="Email" variant="outlined" type="text"
             placeholder="testuser@example.com" />
-
-          <span class="absolute inset-y-4 end-0 grid px-4">
-            <v-icon icon="mdi-at" />
-          </span>
         </div>
       </div>
 
@@ -91,6 +128,48 @@ const handleSubmit = async () => {
         </div>
       </div>
 
+      <div>
+        <label for="email" class="sr-only">Cumpleaños</label>
+        <div class="relative">
+            <v-text-field 
+            v-model="birthday" 
+            :rules="[(v) => !!v.trim() && v.length > 0 || 'El Cumpleaños es requerido',]"
+            label="Cumpleaños" 
+            variant="outlined" 
+            type="text"
+            placeholder="testuser@example.com" 
+                />
+        </div>
+      </div>
+
+      <div>
+        <label for="email" class="sr-only">Tipo de documento</label>
+        <div class="relative">
+            <v-text-field 
+            v-model="document_type" 
+            :rules="[(v) => !!v.trim() && v.length > 0 || 'El Tipo de documento es requerido',]"
+            label="Tipo de documento" 
+            variant="outlined" 
+            type="text"
+            placeholder="testuser@example.com" 
+            />
+        </div>
+      </div>
+      
+      <div>
+        <label for="email" class="sr-only">Numero de documento</label>
+        <div class="relative">
+            <v-text-field 
+            v-model="document_number" 
+            :rules="[(v) => !!v.trim() && v.length > 0 || 'El Numero de documento es requerido',]"
+            label="Numero de documento" 
+            variant="outlined" 
+            type="text"
+            placeholder="testuser@example.com"
+                />
+        </div>
+      </div>
+
       <div class="flex items-center justify-center">
         <p v-if="authError" class="text-sm text-red-500">
           Verifique su correo y contraseña
@@ -104,7 +183,7 @@ const handleSubmit = async () => {
           class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
           :loading="authLoading"
           >
-          Iniciar Session
+          Crear
         </v-btn>
       </div>
     </v-form>

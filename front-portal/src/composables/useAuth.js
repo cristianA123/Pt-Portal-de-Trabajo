@@ -1,24 +1,60 @@
-// import { StateInterface } from "@/store";
-// import { computed } from "vue";
-// import { useStore } from "vuex"
+import { apiClient } from "@/services/apiService"
+import { useAuthStore } from "@/stores/useAuthStore"
+import { storeToRefs } from "pinia"
 
 
 export const useAuth = () => {
 
-    // const store = useStore<StateInterface>();
+    const store = useAuthStore()
 
-    return {
-       
+    const { isAuthenticated, user} = storeToRefs(store)
+    const { login: loginStore, logout: logoutStore } = store
 
-        // authError: computed( () => store.state.auth.authError),
-        // user: computed( () => store.state.auth.user),
+    const login = async (email, password) => {
+        try {
+            const { data } = await apiClient.post( '/login',{ 
+                email,
+                password
+            });
+    
+            loginStore(data.data.user)
+            return data
 
-
-        // login: ( email, password ) => store.dispatch('auth/login', {email, password}),
-        // logout: () => store.dispatch('auth/logout')
+        } catch (error) {
+            return {
+                success: false,
+                msg: 'Invalid credentials'
+            }
+        }
     }
 
+    const register = async (payload) => {
+        try {
+            console.log(payload)
+            const { data } = await apiClient.post( '/candidate',{ 
+                ...payload
+            });
+    
+            loginStore(data.data.user)
+            return data
 
+        } catch (error) {
+            return {
+                success: false,
+                msg: 'Invalid credentials'
+            }
+        }
+    }
 
+    const logout = async () => {
+        logoutStore()
+    }
 
+    return {
+        login,
+        register,
+        isAuthenticated,
+        user,
+        logout
+    }
 }

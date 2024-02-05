@@ -1,6 +1,5 @@
 <template>
-    Auth
-        <router-view></router-view>
+    <router-view></router-view>
   </template>
 
 <script>
