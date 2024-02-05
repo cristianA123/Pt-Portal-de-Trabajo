@@ -56,6 +56,13 @@ const handleSubmit = async () => {
     }
   }
 };
+
+
+
+const redirigirARegistro = () => {
+
+  router.push('/auth/register'); 
+};
 </script>
 
 <template>
@@ -96,6 +103,12 @@ const handleSubmit = async () => {
           Verifique su correo y contraseña
         </p>
         <p v-else class="opacity-0">.</p>
+      </div>
+
+      <div class="flex items-center justify-center">
+        <p class="text-sm text-blue-500 cursor-pointer" @click="redirigirARegistro">
+          Registrarse
+        </p>
       </div>
 
       <div class="flex items-center justify-center">

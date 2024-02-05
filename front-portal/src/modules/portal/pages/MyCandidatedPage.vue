@@ -2,7 +2,7 @@ import { ref } from 'vue';
 <template>
     <v-card
       flat
-      title="Candidatos"
+      title="Mis Postulaciones"
     >
       <template v-slot:text>
         <v-text-field
@@ -37,34 +37,31 @@ import { ref } from 'vue';
     />
     <DetailJobComponent 
         ref="detailJob"
-    />
-    <ApplyJob 
-        ref="newApplyJob"
-        @onApplyJob="onApplyJob"
+        @onCreatedJon="onCreatedJon"
     />
   </template>
 
 <script setup>
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';   
 import { usePortal } from '@/composables/usePortal';
 import NewJobComponent from './../components/NewJobComponent.vue';
 import DetailJobComponent from '../components/DetailJobComponent.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
-import ApplyJob from '../components/ApplyJob.vue';
 
 
-const { getJobs } = usePortal()
+const { myApplyJob } = usePortal()
 useAuthStore()
 
 const newJob = ref(null)
 const detailJob = ref(null)
-const newApplyJob = ref(null)
 const search = ref('');
 const headers = ref([
-        { key: 'document_number', title: 'Titulo' },
-        { key: 'document_type', title: 'Descripcion' },
-        { key: 'salary', title: 'Salario' }
+        { key: 'title', title: 'Titulo' },
+        { key: 'description', title: 'Descripcion' },
+        { key: 'salary', title: 'Salario' },
+        // { key: 'actions', title: 'Postular' },
+       
     ]);
 const desserts = ref([]);
 
@@ -72,8 +69,9 @@ onMounted(async () => {
   await handleGetJobs()
 })
 
+
 const handleGetJobs = async () => {
-    const response = await getJobs()
+    const response = await myApplyJob()
     desserts.value = response.data
 }
 
@@ -81,9 +79,7 @@ const onCreatedJon = async () => {
   await handleGetJobs()
 }
 
-const onApplyJob = async () => {
-  await handleGetJobs()
-}
+
 
 
 </script>

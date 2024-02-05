@@ -1,3 +1,4 @@
+
 <template>
   <div class="flex h-screen">
     <SideBar class="w-64 p-4"/>
@@ -9,24 +10,7 @@
   </div>
 </template>
 
-<script >
-import { defineComponent } from 'vue'
-
-import NavBar from './../ui/NavBar.vue'
-import SideBar from './../ui/SideBar.vue'
-
-export default defineComponent({
-    name: 'PrivateLayout',
-    components: {
-        NavBar,
-        SideBar
-    },
-    setup () {
-        return {}
-    }
-})
+<script setup>
+import NavBar from './../ui/NavBar.vue';
+import SideBar from './../ui/SideBar.vue';
 </script>
-
-<style scoped>
-
-</style>

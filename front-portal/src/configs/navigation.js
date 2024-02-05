@@ -1,10 +1,6 @@
 
 export const menuNavigation  = [
-    {
-        icon: 'fa-solid fa-user',
-        path: '/candidates',
-        name: 'Postulantes'
-    },
+
     {
         icon: 'fa-solid fa-suitcase',
         path: '/jobs',
@@ -12,8 +8,8 @@ export const menuNavigation  = [
     },
     {
         icon: 'fa-solid fa-suitcase',
-        path: '/auth/login',
-        name: 'Auth'
+        path: '/my-candidates',
+        name: 'Mis Postulantes'
     }
 ]
     

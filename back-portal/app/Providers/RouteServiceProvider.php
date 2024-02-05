@@ -44,12 +44,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('app/Modules/Authentication/Routes/api.php'));
 
-            // Ticket Routes
-            Route::prefix('web-api')
-            ->middleware('api')
-            ->namespace($this->namespace)
-            ->group(base_path('app/Modules/Tickets/Routes/api.php'));
-
              // Candidates Routes
              Route::prefix('web-api')
              ->middleware('api')

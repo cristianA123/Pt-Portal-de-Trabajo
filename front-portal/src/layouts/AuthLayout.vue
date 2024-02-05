@@ -2,23 +2,6 @@
     <router-view></router-view>
   </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
 
-
-export default defineComponent({
-    name: 'AuthLayout',
-    components: {
-
-    },
-    setup () {
-        
-
-        return {}
-    }
-})
 </script>
-
-<style scoped>
-
-</style>

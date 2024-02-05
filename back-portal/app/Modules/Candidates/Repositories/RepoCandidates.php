@@ -74,7 +74,11 @@ class RepoCandidates implements ICandidates
     public function createApplyJob($data)
     {
         $job = Job::find($data->job_id);
-        $job->candidates()->attach($data->candidate_id);
+        
+        $job->candidates()->attach($data->candidate_id, [
+            'cv' => $data->cv,
+            'msg' => $data->msg,
+        ]);
 
         return $job;
     }
@@ -97,20 +101,15 @@ class RepoCandidates implements ICandidates
         // ->get();
 
         // return $job;
-        $job = Job::find($data->job_id);
-    
+
+        $job = Job::with(['candidates.user'])->find($data->job_id);
+
         // Obtén la cantidad total de postulantes
         $totalPostulantes = $job->candidates()->count();
-        
-        // Obtén los detalles del trabajo con los postulantes
-        $postulantes = $job->candidates()->get();
-    
+
         // Agrega la cantidad total al modelo del trabajo
         $job->setAttribute('total_postulantes', $totalPostulantes);
-    
-        // Agrega la colección de postulantes al modelo del trabajo
-        $job->setAttribute('postulantes', $postulantes);
-    
+
         return $job;
     }
 

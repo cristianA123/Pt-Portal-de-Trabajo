@@ -175,8 +175,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-
-        App\Modules\Tickets\Providers\ServiceOrchestration::class,
         App\Modules\Authentication\Providers\ServiceOrchestration::class,
         App\Modules\Candidates\Providers\ServiceOrchestration::class,
         

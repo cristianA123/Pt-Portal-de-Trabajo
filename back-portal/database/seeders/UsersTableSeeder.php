@@ -24,9 +24,30 @@ class UsersTableSeeder extends Seeder
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt('123456'),
                 'birthday' => $faker->date,
+                'role' => 'candidate',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
         }
+
+        DB::table('users')->insert([
+            'name' => 'cristian',
+            'last_name' => 'chipana',
+            'email' => 'cristian@gmail.com',
+            'password' => bcrypt('123456'),
+            'birthday' => $faker->date,
+            'role' => 'admin',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('candidates')->insert([
+            'document_number' => $faker->numerify('########'),
+            'document_type' => $faker->randomElement(['DNI', 'Passport']),
+            'user_id' => 11, // Ajusta esto según tus necesidades
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
     }
 }
